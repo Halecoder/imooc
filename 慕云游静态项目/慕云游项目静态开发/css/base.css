@@ -1,0 +1,48 @@
+@font-face {
+    font-family: "PingFangSCregular";
+    src: url('../fonts/PingFangSCRegular.ttf') format('truetype');
+}
+/* 字体图标 */
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf?t=1658210304304') format('truetype');
+  }
+/* 定义类名 使用字体图标 */
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+body {
+    font-family: "PingFangSCRegular";
+}
+/* 公共类 */
+/* 清除浮动 */
+.clearfix {
+    overflow: hidden;
+}
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+/* 文字居中 */
+.tac {
+    text-align: center;
+}
+/* 元素居中 */
+.center-wrap {
+    margin: 0 auto;
+    /* 网页版心 */
+    width: 1152px;
+}
+/* 行内块转换 */
+.db{
+    display: block;
+}
+.dib {
+    display: inline-block;
+}

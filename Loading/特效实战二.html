@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=img, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .huojian {
+            position: absolute;
+            top: 300px;
+            left: 800px;
+            animation: zd .4s linear 0s infinite alternate;
+        }
+        @keyframes zd {
+            from{
+                transform: translateX(-20px) translateY(-20px);
+            }
+            to{
+                transform: translateX(20px) translateY(20px);
+            }
+        }
+        .line1 {
+            width: 2px;
+            height: 166px;
+            background-color: blue;
+            position: absolute;
+            top: 300px;
+            left: 800px;
+            /* 方向和火箭一致 45度 */
+            transform: rotate(45deg);
+            animation: yd 1s linear 0s infinite ;
+            /* 防止页面刷新就出来 */
+            opacity: 0;
+        }
+        .line2 {
+            width: 2px;
+            height: 166px;
+            background-color: blue;
+            position: absolute;
+            top: 340px;
+            left: 860px;
+            /* 方向和火箭一致 45度 */
+            transform: rotate(45deg);
+            animation: yd 1s linear .4s infinite ;
+            /* 防止页面刷新就出来 */
+            opacity: 0;
+        }
+        .line3 {
+            width: 2px;
+            height: 166px;
+            background-color: blue;
+            position: absolute;
+            top: 390px;
+            left: 890px;
+            /* 方向和火箭一致 45度 */
+            transform: rotate(45deg);
+            animation: yd 1s linear .68s infinite ;
+            /* 防止页面刷新就出来 */
+            opacity: 0;
+        }
+        .line4 {
+            width: 2px;
+            height: 166px;
+            background-color: blue;
+            position: absolute;
+            top: 490px;
+            left: 920px;
+            /* 方向和火箭一致 45度 */
+            transform: rotate(45deg);
+            animation: yd 1s linear .32s infinite ;
+            /* 防止页面刷新就出来 */
+            opacity: 0;
+        }
+        /* 线条移动动画 */
+        @keyframes yd {
+            0% {
+                transform: rotate(45deg)  translateY(-300px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(45deg)  translateY(300px);
+                opacity: 0;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <img class="huojian" src="images/huojian.png" alt="">
+    <!-- 使用线条 模拟穿梭云层 -->
+    <div class="line1"></div>
+    <div class="line2"></div>
+    <div class="line3"></div>
+    <div class="line4"></div>
+
+</body>
+</html>

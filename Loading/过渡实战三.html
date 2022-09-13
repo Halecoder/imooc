@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            /* 动画变换强度 */
+            perspective: 500px;
+            position: relative;
+        }
+        .box img {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            /* 边框变圆形 */
+            border-radius: 50%;
+        }
+        .box img.dog {
+            /* 小狗覆盖小猫 绝对定位 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* 设置变换原点 */
+            transform-origin: 0 0;
+            transition: transform 1s ease 0s;
+
+
+        }
+        .box:hover img.dog {
+            /* 根据实际效果调整正负 */
+            transform: rotateY(-180deg);
+        }
+
+        /* no2 no3层叠box大属性 */
+        .no2 img.dog {
+            transform-origin: 100% 100%;
+        }
+        .no2:hover img.dog {
+            /* 根据实际效果调整正负 */
+            transform: rotateY(180deg);
+        }
+        .no3 img.dog {
+            transform-origin: 0 0;
+        }
+        .no3:hover img.dog {
+            /* 根据实际效果调整正负 */
+            transform: rotateX(180deg);
+        }
+        .no4 img.dog {
+            transform-origin: 0 100%;
+        }
+        .no4:hover img.dog {
+            /* 根据实际效果调整正负 */
+            transform: rotateX(-180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <img class="cat" src="images/cat.jpg" alt="">
+        <img src="images/dog.jpg" alt="" class="dog">
+    </div>
+    <!-- 公共box类 继承 相当于层叠大属性 -->
+    <div class="box no2">
+        <img class="cat" src="images/cat.jpg" alt="">
+        <img src="images/dog.jpg" alt="" class="dog">
+    </div>
+    <div class="box no3">
+        <img class="cat" src="images/cat.jpg" alt="">
+        <img src="images/dog.jpg" alt="" class="dog">
+    </div>
+    <div class="box no4">
+        <img class="cat" src="images/cat.jpg" alt="">
+        <img src="images/dog.jpg" alt="" class="dog">
+    </div>
+</body>
+</html>
