@@ -1,0 +1,3 @@
+先导入数据库，记得Jdbc链接的用户名与密码更改为自己的，数据库名为localhost
+
+记得jar包put into到out目录下的lib文件夹

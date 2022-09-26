@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/task
+                http://www.springframework.org/schema/task/spring-task.xsd
+                http://www.springframework.org/schema/mvc
+                http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                http://www.springframework.org/schema/tx
+                https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--Spring 开启组件扫描-->
+    <context:component-scan base-package="com.imooc"></context:component-scan>
+    <!--开启spring MVC注解模式-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=utf-8</value>
+                        <value>application/json;charset=utf-8</value>
+                    </list>
+            </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!--将图片/JS/CSS等静态资源排除在外，这样做可提高Spring MVC对url的处理效率-->
+    <mvc:default-servlet-handler/>
+
+<!--    配置Spring Freemaker引擎-->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+         <property name="templateLoaderPath" value="/WEB-INF/ftl"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="number_format">#</prop>
+
+            </props>
+        </property>
+    </bean>
+<!--    视图解析器-->
+    <bean id="ViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="contentType" value="text/html;charset=utf-8"/>
+        <property name="suffix" value=".ftl"/>
+    </bean>
+<!--mybatis与Sping整合   配置数据源与连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName"
+                  value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/imooc_reader?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="20020829"/>
+        <property name="initialSize" value="10"/>
+        <property name="maxActive" value="20"/>
+    </bean>
+
+
+    <!--mybatis与Sping整合   配置SqlsessionFactory-->
+<!--    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+<!--        <property name="dataSource" ref="dataSource"/>-->
+<!--        <property name="mapperLocations"-->
+<!--                  value="classpath:mappers/*.xml"/>-->
+<!--        <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+<!--    </bean>-->
+
+
+    <!--mybatis与Sping整合   配置Mapper扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.imooc.reader.mapper"/>
+    </bean>
+
+    <!--声明式事务，配置事务管理器-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 启用注解形式声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+    <!--Mybatis与Spring整合：配置SqlSessionFactory-->
+    <!--原生的Mybatis与Spring整合：看上面注释掉的代码
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    -->
+    <bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations"
+                  value="classpath:mappers/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+
+    <!--配置Kaptcha验证码-->
+    <bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <!--验证码图片不生成边框-->
+                        <prop key="kaptcha.border">no</prop>
+                        <!--验证码图片宽度为120像素-->
+                        <prop key="kaptcha.image.width">120</prop>
+                        <!--验证码图片中字符颜色为蓝色-->
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <!--验证码图片中的单个字符最大占用40像素；（如果图片长度不够的话，其会自动适当缩小字体大小）-->
+                        <prop key="kaptcha.textproducer.font.size">40</prop>
+                        <!--验证码图片,包含4个字符-->
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+<!--    开启Spring-Task定时任务注解模式-->
+    <task:annotation-driven/>
+
+
+
+    <!--激活Spring MVC的文件上传(FileUpload)处理功能-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+</beans>
+
+
+
